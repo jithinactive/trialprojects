@@ -1,6 +1,7 @@
 package utilities;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -16,12 +17,14 @@ public class ExcelUtility {
 	private static XSSFSheet sheet1;
 	private static XSSFSheet sheet2;
 	
+//	FileInputStream file1 = new FileInputStream(System.getProperty("user.dir") + "/src/main/resources/" + "ExportExcel.xlsx");
+	
 	public static String getCellData1(int RowNum1, int ColNum1) throws IOException {
 		FileInputStream file1 = new FileInputStream(System.getProperty("user.dir") + "/src/main/resources/" + "ExportExcel.xlsx");
 		
 		workbook1 = new XSSFWorkbook(file1);
 		
-		Sheet sheet1 = workbook1.getSheetAt(0);
+		sheet1 = workbook1.getSheetAt(0);
 		
 		
         
@@ -38,7 +41,7 @@ public class ExcelUtility {
 	
 		FileInputStream file2 = new FileInputStream(System.getProperty("user.dir") + "/src/main/resources/" + "ExportExcel2.xlsx");
 		workbook2 = new XSSFWorkbook(file2);
-		Sheet sheet2 = workbook2.getSheetAt(0);
+		sheet2 = workbook2.getSheetAt(0);
 		
 		DataFormatter formatter = new DataFormatter();
 		return
@@ -47,12 +50,16 @@ public class ExcelUtility {
 
 	}
 	
-	public static int rowlimits1() {
+	public int rowlimits1() throws IOException {
 		
-		int rowmax1 = sheet1.getLastRowNum() + 1;
+		FileInputStream file1 = new FileInputStream(System.getProperty("user.dir") + "/src/main/resources/" + "ExportExcel.xlsx");
+		
+		workbook1 = new XSSFWorkbook(file1);
+		
+		sheet1 = workbook1.getSheetAt(0);
+		int rowmax1 = sheet1.getLastRowNum();
 
-        
-        
+	
 		return rowmax1;
 	}
 	
@@ -61,8 +68,11 @@ public class ExcelUtility {
 		return colmax1;
 	}
 	
-	public static int rowlimits2() {
-		int rowmax2 = sheet2.getLastRowNum() + 1;
+	public int rowlimits2() throws IOException {
+		FileInputStream file2 = new FileInputStream(System.getProperty("user.dir") + "/src/main/resources/" + "ExportExcel2.xlsx");
+		workbook2 = new XSSFWorkbook(file2);
+		sheet2 = workbook2.getSheetAt(0);
+		int rowmax2 = sheet2.getLastRowNum();
 		
 		return rowmax2;
 	}
