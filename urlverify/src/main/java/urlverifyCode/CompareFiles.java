@@ -1,22 +1,30 @@
-package urlverify1;
+package urlverifyCode;
 
 import java.io.IOException;
 
-import org.testng.annotations.Test;
+import javax.swing.JTextPane;
 
+import urlVerifyUI.UrlTestUI;
+import urlVerifyUI.UrlTestUI.AppendTextPane;
+//import org.testng.annotations.Test;
 import utilities.ExcelUtility;
 
-public class CompareFiles{
+public class CompareFiles extends UrlTestUI{
+	private JTextPane textPane;
 	
 	int i;
-	
 	int count;
+	String string1;
 	ExcelUtility objutil;
 	
-	public static void main(String[] args) {
-		
+	public static final String GREEN = "#00FF00*#";
+	public static final String RED = "#FF0000*#";
+
+	public CompareFiles(AppendTextPane textpane) {
+		this.atp=textpane;
 	}
-	@Test
+	
+//	@Test
 	public void excelcompare() throws IOException {
 		
 		objutil = new ExcelUtility();
@@ -30,9 +38,6 @@ public class CompareFiles{
 		String cellval2;
 //		System.out.println(row1);
 //		System.out.println("row2:"+row2);
-		
-		
-		
 //		System.out.println(cellval1);
 		
 		do {
@@ -46,6 +51,7 @@ public class CompareFiles{
 //				System.out.println(cellval1);
 			if(cellval1.equals(cellval2)) {
 				System.out.println("found url at:"+j);
+				atp.appendText(GREEN+"found url at:"+j);
 				j++;
 				count++;
 				}
@@ -61,11 +67,13 @@ public class CompareFiles{
 //			System.out.println("count :"+count);
 			if(count!=1) {
 			System.out.println("Not found url:"+cellval2+" AtRow:"+i);
+			atp.appendText(RED+"Not found url:"+cellval2+" AtRow:"+i);
 		}
 //			System.out.println("2row"+i);
 			i++;
 		}while(i<=row2);
 		
-	}
+	}	
 }
+
 
