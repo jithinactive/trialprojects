@@ -20,7 +20,8 @@ public class ExcelUtility {
 //	FileInputStream file1 = new FileInputStream(System.getProperty("user.dir") + "/src/main/resources/" + "ExportExcel.xlsx");
 	
 	public static String getCellData1(int RowNum1, int ColNum1) throws IOException {
-		FileInputStream file1 = new FileInputStream(System.getProperty("user.dir") + "/src/main/resources/" + "ExportExcel.xlsx");
+		FileInputStream file1 = new FileInputStream(System.getProperty("user.dir") + "/src/main/resources/SitemapExport/" 
+	+ "ExportSitemap.xlsx");
 		
 		workbook1 = new XSSFWorkbook(file1);
 		
@@ -52,7 +53,7 @@ public class ExcelUtility {
 	
 	public int rowlimits1() throws IOException {
 		
-		FileInputStream file1 = new FileInputStream(System.getProperty("user.dir") + "/src/main/resources/" + "ExportExcel.xlsx");
+		FileInputStream file1 = new FileInputStream(System.getProperty("user.dir") + "/src/main/resources/SitemapExport/" + "ExportSitemap.xlsx");
 		
 		workbook1 = new XSSFWorkbook(file1);
 		

@@ -9,7 +9,10 @@ import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
+import org.openqa.selenium.WebDriver;
+
 import urlverifyCode.CompareFiles;
+import urlverifyCode.Crawler;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -17,15 +20,20 @@ import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
+import java.awt.Component;
+import javax.swing.Box;
+import javax.swing.JTextField;
 
 public class UrlTestUI {
 
 	private JFrame frame = new JFrame();
 	static UrlTestUI window;
-//	AppendingTextPane atp = new AppendingTextPane();
+	WebDriver driver;
 	protected AppendTextPane atp= new AppendTextPane();
 	SwingWorker<Object, Void> worker;
 	CompareFiles tr;
+	Crawler objcrlr;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -58,13 +66,29 @@ public class UrlTestUI {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JButton btnNewButton = new JButton("Start");
+		textField = new JTextField();
+		textField.setBounds(56, 35, 707, 29);
+		frame.getContentPane().add(textField);
+		textField.setColumns(10);
+		
+		final JButton btnNewButton = new JButton("Start");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				worker = new SwingWorker<Object, Void>() {
 			          @Override
 			          public Object doInBackground() { 
 			        	  btnNewButton.setEnabled(false);
+			        	  objcrlr = new Crawler(driver);
+			        	  String url = textField.getText();
+			        	  objcrlr.splitUrl(url);
+//			        	  objcrlr.browserSetup(url);
+			        	  objcrlr.browserSetupSitMap();
+			        	  try {
+							objcrlr.crawler();
+						} catch (IOException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
 			        	  
 			        	  tr =new CompareFiles(atp);
 			        	  try {
@@ -73,9 +97,9 @@ public class UrlTestUI {
 			        		  e1.printStackTrace();
 				}
 //				test();
-				atp.appendText("helloText1");
+				atp.appendText("**End**");
+				return url;
 				
-				return e ;
 			          }
 
 			          @Override
@@ -95,6 +119,8 @@ public class UrlTestUI {
 		
 		atp.setEditable(false);
 		scrollPane.setViewportView(atp);
+		
+		
 	}
 
 public class AppendTextPane extends JTextPane {
